@@ -1,0 +1,119 @@
+#tower of hanoi
+count=0
+def toh(n,src,aux,dest):
+    global count
+    if n==1:
+        count=count+1
+        return
+    toh(n-1,src,dest,aux)
+    count=count+1
+    toh(n-1,aux,src,dest)
+n=int(input())
+src,aux,dest='a','b','c'
+toh(n,src,aux,dest)
+print(count)
+    
+def toh(n,src,aux,dest):
+    if n>0:
+        toh(n-1,src,dest,aux)
+        print(src,dest)
+        toh(n-1,aux,src,dest)
+n=int(input())
+toh(n,'A','B','C')
+
+#generate parenthesis
+class Solution:
+    def generateParenthesis(self, n):
+        l=[]
+        res=[]
+        def backtrack(opencount=0,closecount=0):
+            if opencount==closecount==n:
+                res.append("".join(l))
+            if opencount<n:
+                l.append('(')
+                backtrack(opencount+1,closecount)
+                l.pop()
+            if closecount<opencount:
+                l.append(')')
+                backtrack(opencount,closecount+1)
+                l.pop()
+            return res
+        return backtrack()
+n=int(input())
+a=Solution()
+print(a.generateParenthesis(n))
+
+#
+def generate_parentheses(n):
+    def backtrack(s, left, right):
+        if len(s) == 2 * n:
+            valid_parentheses.append(s)
+            return
+        if left < n:
+            backtrack(s + '(', left + 1, right)
+        if right < left:
+            backtrack(s + ')', left, right + 1)
+
+    valid_parentheses = []
+    backtrack('', 0, 0)
+    return valid_parentheses
+n =int(input()) 
+parentheses_list = generate_parentheses(n)
+for i in parentheses_list:
+    print(i,end="")
+
+#validation of par
+def back(exp):
+    stack=[]
+    for i in exp:
+        if i in ['(','{','[']:
+            stack.append(i)
+        else:
+            if not stack:
+                return False
+            cur=stack.pop()
+            if cur=='(':
+                if i !=')':
+                    return False
+            if cur=='{':
+                if i !='}':
+                    return False
+            if cur=='[':
+                if i !=']':
+                    return False
+    if stack:
+        return False
+    return True
+exp=input()
+print(back(exp))
+
+#n queens
+class Solution:
+    def totalNQueens(self, n):
+        col=[]
+        podia=[]
+        nedia=[]
+        board=[["."]*n for i in range(n)]
+        ans=[]
+        def backtracking(r):
+            if r==n:
+               l=["".join(i) for i in board]
+               ans.append(l)
+               return
+            for c in range(n):
+                if c in col or (r+c) in podia or (r-c) in nedia:
+                    continue
+                board[r][c]='Q'
+                col.append(c)
+                podia.append(r+c)
+                nedia.append(r-c)
+                backtracking(r+1)
+                board[r][c]='.'
+                col.remove(c)
+                podia.remove(r+c)
+                nedia.remove(r-c)
+        backtracking(0)
+        return ans
+n=int(input())
+a=Solution()
+print(a.totalNQueens(n))

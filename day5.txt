@@ -1,0 +1,110 @@
+#random module
+import random
+a=input()
+print(random.randint(1,100),'%')
+
+
+#print numbers
+n=int(input())
+def fun(n):
+    if n==0:
+        return
+    fun(n-1)
+    print(n,end=" ")
+fun(n)
+
+#print in reverse order
+n=int(input())
+def fun(n):
+    if n==0:
+        return
+    print(n,end=" ")
+    fun(n-1)
+fun(n)
+
+#multi table
+n=int(input())
+r=int(input())
+def fun(n,r):
+    if r==0:
+        return
+    fun(n,r-1)
+    print(n,'*',r, '=' ,(n*r))
+fun(n,r)
+
+#palindrome
+s=input()
+h=s[::-1]
+if h==s:
+    print("palindrome")
+else:
+    print("not a palindrome")
+
+s=input()
+i=0
+j=len(s)-1
+while i<j:
+    if s[i]!=s[j]:
+        print("not a palindrome")
+    i=i+1
+    j=j-1
+else:
+    print("palindrome")
+    
+s=input()
+i=0
+j=len(s)-1
+def palin(s,i,j):
+    if i>j:
+        return True
+    if s[i]!=s[j]:
+        return False
+    return palin(s,i+1,j-1)
+palin(s,i,j)
+
+#0-land and 1-water(island)
+def fun(l,i,j,n):
+    if l[i][j]==0:
+        return
+    if l[i][j]==1:
+        l[i][j]=0
+    if j>0:
+        fun(l,i,j-1,n)
+    if j<n-1:
+        fun(l,i,j+1,n)
+    if i>0:
+        fun(l,i-1,j,n)
+    if i<n-1:
+        fun(l,i+1,j,n)
+n=int(input())
+l=[]
+for i in range(n):
+    l.append(list(map(int,input().split())))
+count=0
+for i in range(n):
+    for j in range(n):
+        if l[i][j]==1:
+            count=count+1
+            fun(l,i,j,n)
+print(count)
+
+#check subset sum
+def subsets(arr,tar,n):
+    if tar==0:
+        return True
+    if n==0:
+        return False
+    if arr[n-1]>tar:
+        return subsets(arr,tar,n-1)
+    return subsets(arr,tar-arr[n-1],n-1) or subsets(arr,tar,n-1)
+arr=[]
+m=(input().split(','))
+for i in m:
+    arr.append(int(i))
+tar=int(input())
+n = len(arr)
+ans=subsets(arr,tar,n)
+if ans==True:
+    print("True")
+else:
+    print("False")
