@@ -1,0 +1,155 @@
+#quicksort
+def fun(l,start,end):
+    if start<end:
+        pi=qsort(l,start,end)
+        fun(l,start,pi-1)
+        fun(l,pi+1,end)
+def qsort(l,start,end):
+    pi=l[end]
+    i=start-1
+    for j in range(start,end):
+        if l[j]<pi:
+            i=i+1
+            l[i],l[j]=l[j],l[i]
+    l[i+1],l[end]=l[end],l[i+1]
+    return i+1
+n=int(input())
+l=[]
+for i in range(n):
+    l.append(list(map(int,input().split())))
+fun(l,0,len(l)-1)
+print(l)
+
+#inversion count
+n=int(input())
+l=[]
+for i in range(n):
+    l.append(list(map(int,input().split())))
+count=0
+for i in range(len(l)-1):
+    for j in range(i+1,len(l)):
+        if l[i]>l[j]:
+            count+=1
+print(count)
+
+#merge sort
+def mergesort(l):
+    if len(l)>1:
+        mid=len(l)//2
+        left=l[:mid]
+        right=l[mid:]
+        left=mergesort(left)
+        right=mergesort(right)
+        mergedl=merge(left,right)
+        return mergedl
+    return l
+def merge(left,right):
+    res=[]
+    i=j=k=0
+    while i<len(left) and j<len(right):
+        if left[i]<right[j]:
+            res.append(left[i])
+            i=i+1
+        else:
+            res.append(right[j])
+            j=j+1
+    res.extend(left[i:])
+    res.extend(right[j:])
+    return res
+n=int(input())
+l=[]
+for i in range(n):
+    l.append(list(map(int,input().split())))
+print(mergesort(l))
+
+#mergesort inversion count
+def mergesort(l,inversion):
+    if len(l)>1:
+        mid=len(l)//2
+        left=l[:mid]
+        right=l[mid:]
+        li=mergesort(left,inversion)
+        ri=mergesort(right,inversion)
+        i=j=k=0
+        while i<len(left) and j<len(right):
+            if left[i]<=right[j]:
+                l[k]=left[i]
+                i=i+1
+                k=k+1
+            else:
+                l[k]=right[j]
+                j=j+1
+                k=k+1
+                inversion+=len(left)-i
+        while i<len(left):
+            l[k]=left[i]
+            i=i+1
+            k=k+1
+        while j<len(right):
+            l[k]=right[j]
+            j=j+1
+            k=k+1
+        return li+ri+inversion
+    return 0
+n=int(input())
+l=[]
+for i in range(n):
+    l.append(list(map(int,input().split())))
+print(mergesort(l,0))
+print(l)
+
+#merge sort with one function
+def mergesort(l):
+    if len(l)>1:
+        mid=len(l)//2
+        left=l[:mid]
+        right=l[mid:]
+        li=mergesort(left)
+        ri=mergesort(right)
+        i=j=k=0
+        while i<len(left) and j<len(right):
+            if left[i]<=right[j]:
+                l[k]=left[i]
+                i=i+1
+                k=k+1
+            else:
+                l[k]=right[j]
+                j=j+1
+                k=k+1
+        while i<len(left):
+            l[k]=left[i]
+            i=i+1
+            k=k+1
+        while j<len(right):
+            l[k]=right[j]
+            j=j+1
+            k=k+1
+n=int(input())
+l=[]
+for i in range(n):
+    l.append(list(map(int,input().split())))
+mergesort(l)
+print(l)
+
+#all possible subsets equal to sum
+def fun(l,target):
+    def backtrack(start,su,subset):
+        if su==target:
+            res.append(subset[:])
+            return
+        if su>target or start==len(l):
+            return
+        subset.append(l[start])
+        backtrack(start+1,su+l[start],subset)
+        subset.pop()
+        backtrack(start+1,su,subset)
+    res=[]
+    backtrack(0,0,[])
+    return res
+l=list(map(int,input().split()))
+target=int(input())
+result=fun(l,target)
+if result:
+    print(result)
+else:
+    print("no subset")
