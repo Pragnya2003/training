@@ -1,0 +1,131 @@
+#floor using binary search
+def bs_floor(l,start,end,target,floor):
+    if start<=end:
+        mid=((start+end)//2)
+        if l[mid]==target:
+            return l[mid]
+        elif l[mid]<target:
+            floor=l[mid]
+            return bs_floor(l,mid+1,end,target,floor)
+        else:
+            return bs_floor(l,start,mid-1,target,floor)
+    return floor
+l=list(map(int,input().split()))
+target=int(input())
+start=0
+end=len(l)-1
+floor=-1
+k=bs_floor(l,start,end,target,floor)
+print(k)
+
+#ceil(greater value) using bs
+def bs_ceil(l,si,li,target,ceil):
+    if si<=li:
+        mid=((si+li)//2)
+        if l[mid]==target:
+            return l[mid]
+        elif l[mid]<target:
+            return bs_ceil(l,mid+1,li,target,ceil)
+        else:
+            ceil=l[mid]
+            return bs_ceil(l,si,mid-1,target,ceil)
+    return ceil
+l=list(map(int,input().split()))
+si=0
+li=len(l)-1
+target=int(input())
+ceil=0
+k=bs_ceil(l,si,li,target,ceil)
+print(k)
+
+#squareroot of number(floor) using iteration
+n=int(input())
+si=0
+li=n//2
+floor=-1
+while si<=li:
+    mid=(si+li)//2
+    sq=mid*mid
+    if sq==n:
+        floor=mid
+        break
+    elif sq<n:
+        floor=mid
+        si=mid+1
+    else:
+        li=mid-1
+print(floor)
+
+#squareroot of number using recursion floor
+def sq_floor(n,si,li,floor):
+    if n<0:
+        return -1
+    if n==1:
+        return 1
+    if si<=li:
+        mid=(si+li)//2
+        sq=mid*mid
+        if sq==n:
+            return mid
+        elif sq<n:
+            floor=mid
+            sq_floor(n,mid+1,li,floor)
+        else:
+            sq_floor(n,si,mid-1,floor)
+    return floor
+n=int(input())
+si=0
+li=n//2
+floor=-1
+k=sq_floor(n,si,li,floor)
+print(k)
+
+#squareroot of number using recursion points
+def sq_bs(n,epsilon=1e-6):
+    if n<0:
+        raise ValueError("cannot compute")
+    if n<1:
+        left,right=number,1
+    else:
+        left,right=0,number
+    while abs(left-right)>epsilon:
+        mid=(left+right)/2
+        mid_squared=mid*mid
+        if mid_squared<number:
+            left=mid
+        else:
+            right=mid
+    return (left+right)/2
+number=int(input())
+result=sq_bs(number)
+print(f"the squareroot of {number} is appr is {result}")
+
+#peakmountain index
+def peak(l,si,li):
+        mid=(si+li)//2
+        if l[mid]>l[mid-1] and l[mid]>l[mid+1]:
+            return mid
+        elif l[mid-1]>l[mid]:
+            li=mid
+            return peak(l,si,mid)
+        else:
+            return peak(l,mid+1,li)
+l=list(map(int,input().split()))
+si=0
+li=len(l)-1
+print(peak(l,si,li))
+
+#two sum
+def sum(l,left,right,target):
+    if left<right:
+        if l[left]+l[right]==target:
+            return left,right
+        elif l[left]+l[right]<target:
+            return sum(l,left+1,right,target)
+        else:
+            return sum(l,left,right+1,target)
+l=list(map(int,input().split()))
+target=int(input())
+left=0
+right=len(l)-1
+print(sum(l,left,right,target))
