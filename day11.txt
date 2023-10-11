@@ -1,0 +1,117 @@
+#knapsack
+W=int(input())
+wt=list(map(int,input().split()))
+pr=list(map(int,input().split()))
+perkg=[]
+for i in range(len(wt)):
+    perkg.append(pr[i]/wt[i])
+l=list(zip(wt,pr,perkg))
+l.sort(key=lambda x:x[2],reverse=True)
+maxpr=0
+for weight,profit,perkg in l:
+    if weight<=W:
+        maxpr+=profit
+        W-=weight
+    else:
+        maxpr+=W*(profit/weight)
+        break
+print(maxpr)
+
+#tripletsum
+l=list(map(int,input().split()))
+target=int(input())
+for i in range(len(l)):
+    for j in range(i+1,len(l)):
+        for k in range(j+1,len(l)):
+            if l[i]+l[j]+l[k]==target:
+                print("found")
+            
+#tripletsum
+def solve(arr):
+    for p3 in range(len(arr)-2):
+        p1 = p3+1
+        p2 = len(arr)-1
+        while p1<p2:
+            sum = arr[p1] + arr[p2] + arr[p3]
+            if sum == target:
+                return (arr[p1], arr[p2], arr[p3])
+            elif sum < target:
+                p1 += 1
+            else:
+                p2 -= 1
+    return False
+    
+arr = [2,3,4,5,6]
+target = 15
+result = solve(arr)
+print(result)
+
+#arranging cows
+def isvalid(n,k,stalls,mid):
+    prev_cow=stalls[0]
+    count=1
+    for i in stalls:
+        if (i-prev_cow)>=mid:
+            count+=1
+            prev_cow=i
+    return True if k==count else False
+def arrange(n,k,stalls):
+    stalls.sort()
+    si=0
+    li=stalls[-1]-stalls[0]
+    res=0
+    while si<=li:
+        mid=(si+li)//2
+        if isvalid(n,k,stalls,mid):
+            res=mid
+            si=mid+1
+        else:
+            li=mid-1
+    return res
+n=int(input())
+k=int(input())
+stalls=[]
+stalls=list(map(int,input().split()))
+print(arrange(n,k,stalls))
+
+#max time to run computers
+def maxRunTime(n,batteries):
+        total=0
+        for i in range(len(batteries)):
+            total+=batteries[i]
+        batteries.sort()
+        while batteries[-1]>total/n:
+            total-=batteries[-1]
+            batteries.pop()
+            n-=1
+        return total//n
+n=int(input())
+batteries=list(map(int,input().split()))
+print(maxRunTime(n,batteries))
+
+#best time to buy and sell stocks
+def maxProfit(prices):
+    p=0
+    buy=prices[0]
+    for i in range(len(prices)):
+        if prices[i]<buy:
+            buy=prices[i]
+        elif prices[i]-buy>p:
+            p=prices[i]-buy
+    return p
+prices=list(map(int,input().split()))
+print(maxProfit(prices))
+
+#best time to buy and sell stocks2
+def maxProfit(prices):
+    p=0
+    buy=prices[0]
+    for i in range(len(prices)):
+        if prices[i]<buy:
+            buy=prices[i]
+        elif prices[i]-buy>0:
+            p+=prices[i]-buy
+            buy=prices[i]
+    return p
+prices=list(map(int,input().split()))
+print(maxProfit(prices))
