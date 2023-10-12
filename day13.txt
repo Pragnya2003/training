@@ -1,0 +1,42 @@
+#lettercombinations
+def letterCombinations(digits):
+    d={'2':'abc','3':'def','4':'ghi','5':'jkl','6':'mno','7':'pqrs','8':'tuv','9':'wxyz'}
+    res=[]
+    def backtrack(i,curstr):
+        if len(curstr)==len(digits):
+            res.append(curstr)
+            return
+        for c in d[digits[i]]:
+            backtrack(i+1,curstr+c)
+    if digits:
+        backtrack(0,'')
+    return res
+digits=input()
+print(letterCombinations(digits))
+
+#valid sudoku
+import collections
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        row=collections.defaultdict(set)
+        col=collections.defaultdict(set)
+        box=collections.defaultdict(set)
+        for i in range(9):
+            for j in range(9):
+                if board[i][j]!='.':
+                    if board[i][j] in row[i] or board[i][j] in col[j] or board[i][j] in box[(i//3,j//3)]:
+                        return False
+                    row[i].add(board[i][j])
+                    col[j].add(board[i][j])
+                    box[(i//3,j//3)].add(board[i][j])
+        return True
+
+#oops
+class cse:
+    def __init__(self,a):
+        print("hello",a)
+    def fun(s):
+        print("hey yeah")
+o=cse(2)
+o.__init__(5)
+o.fun()
