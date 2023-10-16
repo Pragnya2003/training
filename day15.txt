@@ -1,0 +1,85 @@
+#array rotation by right
+l=list(map(int,input().split()))
+k=int(input())
+for i in range(k):
+    l.insert(0,l.pop())
+print(l)
+
+#using temp var
+l=list(map(int,input().split()))
+n=len(l)
+k=int(input())
+for i in range(k):
+    temp=l[-1]
+    for j in range(n-1,0,-1):
+        l[j]=l[j-1]
+    l[0]=temp
+print(l)
+
+#using slicing
+l=list(map(int,input().split()))
+k=int(input())
+if k>=len(l):
+    k=k%len(l)  
+a=len(l)-k
+l[:]=l[a:]+l[:a]
+print(l)
+
+#left rotation using slicing
+l=list(map(int,input().split()))
+k=int(input()) 
+a=k
+l[:]=l[a:]+l[:a]
+print(l)
+
+#left rotation of array
+l=list(map(int,input().split()))
+n=len(l)
+k=int(input())
+for i in range(k):
+    temp=l[0]
+    for j in range(len(l)-1):
+        l[j]=l[j+1]
+    l[-1]=temp
+print(l)
+
+#search in rotated array
+def array(l,target):
+    si=0
+    li=len(l)-1
+    while si<=li:
+        mid=(si+li)//2
+        if l[mid]==target:
+            return mid
+        elif l[mid]>=l[si]:
+            if target>=l[si] and target<=l[mid]:
+                li=mid-1
+            else:
+                si=mid+1
+        else:
+            if target>=l[mid] and target<=l[li]:
+                si=mid+1
+            else:
+                li=mid-1
+    return -1
+l=list(map(int,input().split()))
+target=int(input())
+print(array(l,target))
+
+#knapsack problem
+def knapSack(W,wt,val,n):
+    dp=[[0 for x in range(W+1)] for x in range(n+1)]
+    for i in range(n+1):
+        for w in range(W+1):
+            if i==0 or w==0:
+                dp[i][w]=0
+            elif wt[i-1]<=w:
+                dp[i][w]=max(val[i-1]+dp[i-1][w-wt[i-1]],dp[i-1][w])
+            else:
+                dp[i][w]=dp[i-1][w]
+    return dp[n][w]
+val = list(map(int,input().split()))
+wt = list(map(int,input().split()))
+W = int(input())
+n = len(val)
+print(knapsack(W,wt,val,n))

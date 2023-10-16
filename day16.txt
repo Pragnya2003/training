@@ -1,0 +1,47 @@
+#sliding window algorithm
+'''l=list(map(int,input().split()))
+tar=int(input())
+i=0
+j=0
+currsum=l[0]
+while j<len(l):
+    if currsum==tar:
+        print(l[i],l[j],currsum)
+        break
+    elif currsum>tar:
+       currsum-=l[i]
+       i+=1
+    else:
+        j+=1
+        currsum+=l[j]
+
+#prime algorithm
+def seiveoferatosthenes(num):
+    prime=[True]*(num+1)
+    p=2
+    while(p*p<=num):
+        if prime[p]:
+            for i in range(p*p,num+1,p):
+                prime[i]=False
+        p+=1
+    for p in range(2,num+1):
+        if prime[p]:
+            print(p)
+num=int(input())
+seiveoferatosthenes(num)
+
+#histogram
+l=list(map(int,input().split()))
+for i in l:
+    print('x '*i)
+
+l=list(map(int,input().split()))
+maxele=max(l)
+for i in range(maxele,0,-1):
+    print(f"{i:2d} | ",end="")
+    for j in l:
+        if j>=i:
+            print(" x ",end="")
+        else:
+            print("   ",end="")
+    print()

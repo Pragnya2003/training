@@ -1,0 +1,121 @@
+#inheritance
+#single
+class cse():
+    def fun1(self):
+        print("one")
+    def fun2(self):
+        print("two")
+class two(cse):
+    def fun3(self):
+        print("three")
+    def fun4(self):
+        print("four")
+a=two()
+a.fun3()
+a.fun1()
+
+#mutliple
+class cse():
+    def fun1(self):
+        print("bhavana")
+    def fun2(self):
+        print("sindhuja")
+class two(cse):
+    def fun3(self):
+        print("pragnya")
+    def fun4(self):
+        print("sathwika")
+class three(two):
+    def fun5(self):
+        print("srija")
+    def fun6(self):
+        print("umesh")
+o=cse()
+a=two()
+b=three()
+b.fun5()
+b.fun3()
+b.fun1()
+
+#polymorphism
+class cse():
+    def fun1(self):
+        print("one")
+    def fun1(self):
+        print("two")
+class two(cse):
+    def fun3(self):
+        print("three")
+    def fun4(self):
+        print("four")
+o=cse()
+o.fun1()
+
+#super
+class cse():
+    def fun1(self):
+        print("one")
+    def fun2(self):
+        print("two")
+class two(cse):
+    def fun3(self):
+        super().fun1()
+        print("three")
+    def fun4(self):
+        super().fun2()
+        print("four")
+a=two()
+a.fun3()
+a.fun4()
+
+class cse():
+    def fun1(self):
+        print("one")
+    def fun2(self):
+        print("two")
+class one():
+    def fun3(self):
+        cse.fun1(self)
+    def fun4(self):
+        print("three")
+a=one()
+a.fun3()
+
+#subset of palindromic strings
+def palin(str):
+    def rev(left,right):
+        while left>=0 and right<len(str) and str[left]==str[right]:
+            left-=1
+            right+=1
+        return str[left+1:right]
+    res=[]
+    for i in range(len(str)):
+        pal1=rev(i,i)
+        if len(pal1)>1:
+            res.append(pal1)
+        pal2=rev(i,i+1)
+        if len(pal2)>1:
+            res.append(pal2)
+    return res
+str=input()
+k=palin(str)
+print(k)
+
+#dynamic programming
+#fibonacci series
+def fibo(n):
+    dp=[-1]*(n+1)
+    return fib(n,dp)
+def fib(n,dp):
+    if dp[n]>=0:
+        return dp[n]
+    if n==0:
+        dp[n]=n
+    if n==1:
+        dp[n]=n
+    else:
+        dp[n]=fib(n-1,dp)+fib(n-2,dp)
+    return dp
+n=int(input())
+k=fibo(n)
+print(k)
